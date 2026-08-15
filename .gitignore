@@ -38,3 +38,6 @@ yarn-error.log*
 /.wrangler/
 /outputs/
 /work/
+
+# local review artifact (not part of the published LP)
+/Codex starbucks.jp.lp.png

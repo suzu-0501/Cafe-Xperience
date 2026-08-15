@@ -1,66 +1,10 @@
 import Image from "next/image";
-
-const links = {
-  store: "https://store.starbucks.co.jp/",
-  menu: "https://menu.starbucks.co.jp/",
-  mobile: "https://www.starbucks.co.jp/mobile-app/",
-  instagram: "https://www.instagram.com/starbucks_j/",
-  anniversary: "https://www.starbucks.co.jp/30th/",
-  seasonal:
-    "https://stories.starbucks.co.jp/press/2026/pr-2026-07-15/",
-};
-
-const seasonal = [
-  {
-    number: "01",
-    mood: "濃厚に、果実を楽しむ",
-    name: "ぎゅぎゅっと オレンジ ＆ マンゴー フラペチーノ®",
-    text: "オレンジの果肉感とマンゴーのコクを、ひと口にぎゅっと。",
-    image: "/images/orange-frappuccino.jpg",
-    alt: "オレンジ＆マンゴー フラペチーノの公式商品イメージ",
-  },
-  {
-    number: "02",
-    mood: "シュワっと、軽やかに",
-    name: "チラックス ソーダ オレンジ ＆ マンゴー",
-    text: "果実とゼリー、心地よい炭酸が重なる爽快な一杯。",
-    image: "/images/orange-chillax.jpg",
-    alt: "チラックス ソーダ オレンジ＆マンゴーの公式商品イメージ",
-  },
-  {
-    number: "03",
-    mood: "ティーで、すっきりと",
-    name: "クラフト ジューシー オレンジ ＆ マンゴー ティー",
-    text: "ジューシーな果実と、ほどよい渋みのブラックティー。",
-    image: "/images/orange-tea.jpg",
-    alt: "クラフト ジューシー オレンジ＆マンゴー ティーの公式商品イメージ",
-  },
-];
-
-const moods = [
-  { time: "07:30", title: "朝の一杯", text: "ゆっくり今日を始めたいときに", tone: "cream", icon: "☀", image: "/images/generated/mood-morning.png", alt: "朝の窓辺に置かれたラテのイメージ" },
-  { time: "12:15", title: "移動の途中", text: "気分を軽やかに変えたいときに", tone: "orange", icon: "↗", image: "/images/generated/mood-commute.png", alt: "移動途中のベンチに置かれたテイクアウトカップのイメージ" },
-  { time: "15:00", title: "ひと休み", text: "甘い時間を楽しみたいときに", tone: "pink", icon: "✦", image: "/images/generated/mood-break.png", alt: "果実のドリンクと焼き菓子でひと休みするイメージ" },
-  { time: "19:10", title: "一日の終わり", text: "ほっと自分に戻りたいときに", tone: "green", icon: "☾", image: "/images/generated/mood-evening.png", alt: "夜の窓辺でコーヒーを楽しむイメージ" },
-];
-
-const classics = [
-  { name: "スターバックス ラテ", type: "ESPRESSO", color: "latte" },
-  { name: "ソイ ラテ", type: "PLANT BASED", color: "soy" },
-  { name: "アーモンドミルク ラテ", type: "PLANT BASED", color: "almond" },
-  { name: "カプチーノ", type: "ESPRESSO", color: "cappuccino" },
-  { name: "カフェ モカ", type: "CHOCOLATE", color: "mocha" },
-  { name: "カフェ アメリカーノ", type: "ESPRESSO", color: "americano" },
-  { name: "キャラメル フラペチーノ®", type: "FRAPPUCCINO®", color: "caramel" },
-  { name: "抹茶 クリーム フラペチーノ®", type: "FRAPPUCCINO®", color: "matcha" },
-];
-
-const gallery = [
-  { src: "/images/orange-mango-hero.jpg", alt: "オレンジ＆マンゴーの3種のビバレッジ" },
-  { src: "/images/orange-frappuccino.jpg", alt: "オレンジ＆マンゴー フラペチーノ" },
-  { src: "/images/orange-chillax.jpg", alt: "オレンジ＆マンゴーのチラックス ソーダ" },
-  { src: "/images/orange-tea.jpg", alt: "オレンジ＆マンゴー ティー" },
-];
+import { classicProducts } from "./data/classic-products";
+import { galleryItems } from "./data/gallery";
+import { LINKS } from "./data/links";
+import { moodItems } from "./data/mood-items";
+import { navigation } from "./data/navigation";
+import { seasonalProducts } from "./data/seasonal-products";
 
 function Arrow() {
   return <span aria-hidden="true">↗</span>;
@@ -80,7 +24,7 @@ function ExternalButton({
       className={`button ${secondary ? "button-secondary" : "button-primary"}`}
       href={href}
       target="_blank"
-      rel="noreferrer"
+      rel="noopener noreferrer"
     >
       <span>{children}</span>
       <Arrow />
@@ -88,249 +32,258 @@ function ExternalButton({
   );
 }
 
+function BrandLabel({ footer = false }: { footer?: boolean }) {
+  return (
+    <span className={`brand-label ${footer ? "footer-brand-label" : ""}`}>
+      <span className="brand-name">STARBUCKS COFFEE</span>
+      <span className="brand-meta">JAPAN · SALES SAMPLE</span>
+    </span>
+  );
+}
+
 export default function Home() {
   return (
-    <main>
+    <>
       <header className="site-header">
         <a className="brand" href="#top" aria-label="ページの先頭へ">
-          <span className="brand-mark">S</span>
-          <span className="brand-type">
-            <b>STARBUCKS</b>
-            <small>COFFEE · JAPAN</small>
-          </span>
+          <BrandLabel />
         </a>
         <nav aria-label="メインナビゲーション">
-          <a href="#seasonal">おすすめ</a>
-          <a href="#classic">定番</a>
-          <a href="#enjoy">楽しみ方</a>
-          <a href="#story">About</a>
+          {navigation.map((item) => (
+            <a href={item.href} key={item.href}>{item.label}</a>
+          ))}
         </nav>
-        <a className="header-cta" href={links.store} target="_blank" rel="noreferrer">
+        <a className="header-cta" href={LINKS.storeSearch} target="_blank" rel="noopener noreferrer">
           店舗を探す <Arrow />
         </a>
       </header>
 
-      <section className="hero" id="top">
-        <div className="hero-visual">
-          <Image
-            src="/images/orange-mango-hero.jpg"
-            alt="オレンジ＆マンゴーの3種のビバレッジ"
-            fill
-            priority
-            sizes="(max-width: 767px) 100vw, 58vw"
-          />
-          <span className="hero-sticker">SUMMER<br />MOOD!</span>
-          <span className="hero-caption">ORANGE &amp; MANGO / 2026</span>
-        </div>
-        <div className="hero-copy">
-          <p className="eyebrow"><span /> FIND YOUR CUP, TODAY</p>
-          <h1>今日は、<br /><em>どんな一杯</em>にする？</h1>
-          <p className="hero-lead">
-            季節のビバレッジから、いつものラテまで。<br className="desktop-only" />
-            気分に合う一杯を見つけて、近くのスターバックスへ。
-          </p>
-          <div className="button-row">
-            <ExternalButton href={links.store}>近くの店舗を探す</ExternalButton>
-            <ExternalButton href={links.menu} secondary>メニューを見る</ExternalButton>
+      <main>
+        <section className="hero" id="top" aria-labelledby="hero-title">
+          <div className="hero-visual">
+            <Image
+              src="/images/orange-mango-hero.jpg"
+              alt="オレンジ＆マンゴーの3種のビバレッジ"
+              fill
+              priority
+              sizes="(max-width: 767px) 100vw, 57vw"
+            />
+            <span className="hero-sticker" aria-hidden="true">SUMMER<br />MOOD!</span>
+            <span className="hero-caption">ORANGE &amp; MANGO / 2026</span>
           </div>
-          <div className="hero-note">
-            <span>SCROLL</span><i />
-            <p>季節のおすすめを<br />見つけにいこう。</p>
+          <div className="hero-copy">
+            <p className="eyebrow"><span /> FIND YOUR CUP, TODAY</p>
+            <h1 id="hero-title">今日は、<br /><em>どんな一杯</em>に<br className="mobile-break" />する？</h1>
+            <p className="hero-lead">
+              季節のビバレッジから、いつものラテまで。<br className="desktop-only" />
+              気分に合う一杯を見つけて、近くのスターバックスへ。
+            </p>
+            <div className="button-row">
+              <ExternalButton href={LINKS.storeSearch}>近くの店舗を探す</ExternalButton>
+              <ExternalButton href={LINKS.menu} secondary>メニューを見る</ExternalButton>
+            </div>
+            <div className="hero-note" aria-hidden="true">
+              <span>SCROLL</span><i />
+              <p>季節のおすすめを<br />見つけにいこう。</p>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section className="section seasonal-section" id="seasonal">
-        <div className="section-head split-head">
-          <div>
-            <p className="eyebrow orange"><span /> SEASONAL PICKS</p>
-            <h2>今のおすすめ</h2>
+        <section className="section seasonal-section" id="seasonal" aria-labelledby="seasonal-title">
+          <div className="section-head split-head">
+            <div>
+              <p className="eyebrow orange"><span /> SEASONAL</p>
+              <h2 id="seasonal-title">今のおすすめ</h2>
+            </div>
+            <p>同じオレンジ＆マンゴーでも、濃厚・爽快・ティー。<br />気分で選べる3つの楽しみ方。</p>
           </div>
-          <p>同じオレンジ＆マンゴーでも、濃厚・爽快・ティー。<br />気分で選べる3つの楽しみ方。</p>
-        </div>
-        <div className="seasonal-grid">
-          {seasonal.map((item) => (
-            <article className="seasonal-card" key={item.name}>
-              <div className="seasonal-image">
-                <Image src={item.image} alt={item.alt} fill sizes="(max-width: 767px) 82vw, 33vw" />
-                <span className="card-number">{item.number}</span>
-              </div>
-              <div className="seasonal-copy">
-                <p>{item.mood}</p>
+          <div className="seasonal-grid">
+            {seasonalProducts.map((item) => (
+              <article className="seasonal-card" key={item.id}>
+                <div className="seasonal-image">
+                  <Image src={item.image} alt={item.alt} fill loading="lazy" sizes="(max-width: 767px) 82vw, 33vw" />
+                  <span className="card-number" aria-hidden="true">{item.number}</span>
+                </div>
+                <div className="seasonal-copy">
+                  <p>{item.mood}</p>
+                  <h3>{item.name}</h3>
+                  <span>{item.description}</span>
+                </div>
+              </article>
+            ))}
+          </div>
+          <div className="section-action">
+            <ExternalButton href={LINKS.menu} secondary>公式メニューで見る</ExternalButton>
+            <small>商品は一時的な欠品または早期に販売終了する場合があります。</small>
+          </div>
+        </section>
+
+        <section className="section mood-section" id="mood" aria-labelledby="mood-title">
+          <div className="section-head centered">
+            <p className="eyebrow"><span /> YOUR MOMENT</p>
+            <h2 id="mood-title">今の気分から、<br />選んでみる。</h2>
+            <p>いつもの時間にも、ちょっと気分を変えたい時にも。</p>
+          </div>
+          <div className="mood-grid">
+            {moodItems.map((item) => (
+              <article className="mood-card" key={item.id}>
+                <Image src={item.image} alt={item.alt} fill loading="lazy" sizes="(max-width: 767px) 50vw, 25vw" />
+                <span className="mood-shade" aria-hidden="true" />
+                <div className="mood-top"><span>{item.time}</span><b aria-hidden="true">{item.icon}</b></div>
+                <div>
+                  <h3>{item.title}</h3>
+                  <p>{item.description}</p>
+                </div>
+              </article>
+            ))}
+          </div>
+          <p className="visual-note">※ 掲載写真は時間の過ごし方を表現した演出イメージです。</p>
+        </section>
+
+        <section className="section classic-section" id="classic" aria-labelledby="classic-title">
+          <div className="section-head split-head">
+            <div>
+              <p className="eyebrow light"><span /> CLASSICS</p>
+              <h2 id="classic-title">いつもの一杯も、<br />気分に合わせて。</h2>
+            </div>
+            <p>ラテ、モカ、フラペチーノ®。<br />定番から選ぶ楽しさも。</p>
+          </div>
+          <div className="classic-grid">
+            {classicProducts.map((item, index) => (
+              <article className="classic-card" key={item.id}>
+                <div className={`classic-visual ${item.tone}`} aria-label="商品画像は公式メニューでご確認ください">
+                  <span>CLASSIC</span>
+                  <b aria-hidden="true">{String(index + 1).padStart(2, "0")}</b>
+                  <small>IMAGE NOT SHOWN</small>
+                </div>
+                <p>{item.category}</p>
                 <h3>{item.name}</h3>
-                <span>{item.text}</span>
-              </div>
-            </article>
-          ))}
-        </div>
-        <div className="section-action">
-          <ExternalButton href={links.seasonal} secondary>公式情報で詳しく見る</ExternalButton>
-          <small>※ 一時的な欠品または早期販売終了となる場合があります。</small>
-        </div>
-      </section>
-
-      <section className="section mood-section" id="enjoy">
-        <div className="section-head centered">
-          <p className="eyebrow"><span /> PICK A MOMENT</p>
-          <h2>今の気分から、<br />選んでみる。</h2>
-          <p>いつもの時間にも、ちょっと気分を変えたい時にも。</p>
-        </div>
-        <div className="mood-grid">
-          {moods.map((mood) => (
-            <article className={`mood-card ${mood.tone}`} key={mood.title}>
-              <Image src={mood.image} alt={mood.alt} fill sizes="(max-width: 767px) 50vw, 25vw" />
-              <span className="mood-shade" aria-hidden="true" />
-              <div className="mood-top"><span>{mood.time}</span><b>{mood.icon}</b></div>
-              <div>
-                <h3>{mood.title}</h3>
-                <p>{mood.text}</p>
-              </div>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section className="section classic-section" id="classic">
-        <div className="section-head split-head">
-          <div>
-            <p className="eyebrow light"><span /> THE CLASSICS</p>
-            <h2>いつもの一杯も、<br />気分に合わせて。</h2>
+                <a href={LINKS.menu} target="_blank" rel="noopener noreferrer" aria-label={`${item.name}を公式メニューで見る`}>
+                  公式メニューへ <Arrow />
+                </a>
+              </article>
+            ))}
           </div>
-          <p>ラテ、モカ、フラペチーノ®。<br />定番から選ぶ楽しさも。</p>
-        </div>
-        <div className="classic-grid">
-          {classics.map((item, index) => (
-            <article className="classic-card" key={item.name}>
-              <div className={`cup-stage ${item.color}`} aria-hidden="true">
-                <span className="cup-lid" />
-                <span className="cup"><i>S</i></span>
-                <b>{String(index + 1).padStart(2, "0")}</b>
-              </div>
-              <p>{item.type}</p>
-              <h3>{item.name}</h3>
-              <a href={links.menu} target="_blank" rel="noreferrer" aria-label={`${item.name}を公式メニューで見る`}>
-                公式メニューへ <Arrow />
+          <div className="section-action dark-action">
+            <ExternalButton href={LINKS.menu}>公式メニューをもっと見る</ExternalButton>
+            <small>※ 価格・取扱商品は店舗によって異なる場合があります。</small>
+          </div>
+        </section>
+
+        <section className="customize-section" id="customize" aria-labelledby="customize-title">
+          <div className="customize-image">
+            <Image src="/images/generated/customize-citrus.png" alt="シトラス果肉やミルク、ソースを選ぶカスタマイズの演出イメージ" fill loading="lazy" sizes="(max-width: 767px) 100vw, 52vw" />
+            <span className="scribble" aria-hidden="true">MY CUP,<br />MY WAY.</span>
+          </div>
+          <div className="customize-copy">
+            <p className="eyebrow orange"><span /> CUSTOMIZE</p>
+            <h2 id="customize-title">ひと工夫で、<br />もっと自分好みに。</h2>
+            <p className="intro">その日の気分に合わせて、味わいを少し変えてみる。</p>
+            <ol className="custom-list">
+              <li><span>01</span><div><h3>爽やかさを重ねて</h3><p>ノンホイップ＋シトラス果肉</p></div></li>
+              <li><span>02</span><div><h3>果実とチョコの組み合わせ</h3><p>シトラス果肉＋チョコレートソース</p></div></li>
+              <li><span>03</span><div><h3>まろやかな味わいへ</h3><p>ホワイトモカフレーバーシロップ</p></div></li>
+            </ol>
+            <small>※ 掲載写真は演出イメージです。カスタマイズの可否・追加料金は、注文時に店舗でご確認ください。</small>
+          </div>
+        </section>
+
+        <section className="pairing-section" id="pairing" aria-labelledby="pairing-title">
+          <div className="pairing-art">
+            <Image src="/images/generated/food-pairing.png" alt="オレンジティーとマンゴー色のスイーツを合わせる演出イメージ" fill loading="lazy" sizes="(max-width: 767px) 100vw, 60vw" />
+            <span className="pairing-label" aria-hidden="true">GOOD<br />TOGETHER</span>
+            <p aria-hidden="true">DRINK <b>＋</b> SWEETS</p>
+          </div>
+          <div className="pairing-copy">
+            <span className="pair-tag"># SWEET PAIRING</span>
+            <p className="eyebrow"><span /> PAIRING</p>
+            <h2 id="pairing-title">甘いお供と、<br />もうひとつ楽しい時間。</h2>
+            <p>ドリンクとフードの組み合わせも、その日の気分で。</p>
+            <small>※ 掲載写真は演出イメージです。正式商品名・価格・販売期間は掲載していません。</small>
+          </div>
+        </section>
+
+        <section className="story-section" id="story" aria-labelledby="story-title">
+          <div className="story-inner">
+            <p className="eyebrow"><span /> OUR STORY</p>
+            <div className="story-title">
+              <h2 id="story-title">一杯から、<br />つながる時間へ。</h2>
+              <span className="thirty" aria-hidden="true">30<small>YEARS</small></span>
+            </div>
+            <div className="story-photo">
+              <Image src="/images/generated/brand-connection.png" alt="コーヒーを囲んで過ごす時間の演出イメージ" fill loading="lazy" sizes="100vw" />
+              <span>ONE CUP, MANY MOMENTS.</span>
+            </div>
+            <div className="story-bottom">
+              <p>1996年、東京・銀座から始まった日本のスターバックス。2026年で30周年。一杯を通じて、人やコミュニティとのつながりを大切にしてきました。</p>
+              <ExternalButton href={LINKS.brandStory} secondary>30周年ストーリーを見る</ExternalButton>
+            </div>
+          </div>
+        </section>
+
+        <section className="section instagram-section" id="instagram" aria-labelledby="instagram-title">
+          <div className="section-head split-head">
+            <div>
+              <p className="eyebrow orange"><span /> INSTAGRAM</p>
+              <h2 id="instagram-title">Instagramで、<br />次の一杯を。</h2>
+            </div>
+            <div className="insta-intro">
+              <p>季節の新商品や楽しみ方をチェック。</p>
+              <ExternalButton href={LINKS.instagram} secondary>Instagramを見る</ExternalButton>
+            </div>
+          </div>
+          <div className="instagram-grid">
+            {galleryItems.map((item, index) => (
+              <a href={LINKS.instagram} target="_blank" rel="noopener noreferrer" key={item.src} aria-label="スターバックス ジャパン公式Instagramを見る">
+                <Image src={item.src} alt={item.alt} fill loading="lazy" sizes="(max-width: 767px) 50vw, 25vw" />
+                <span><b>{String(index + 1).padStart(2, "0")}</b><Arrow /></span>
               </a>
-            </article>
-          ))}
-        </div>
-        <div className="section-action dark-action">
-          <ExternalButton href={links.menu}>公式メニューをもっと見る</ExternalButton>
-          <small>※ 価格・取扱商品は店舗によって異なる場合があります。</small>
-        </div>
-      </section>
-
-      <section className="customize-section">
-        <div className="customize-image">
-          <Image src="/images/generated/customize-citrus.png" alt="シトラス果肉やミルク、ソースを選ぶカスタマイズのイメージ" fill sizes="(max-width: 767px) 100vw, 52vw" />
-          <span className="scribble">MY CUP,<br />MY WAY.</span>
-        </div>
-        <div className="customize-copy">
-          <p className="eyebrow orange"><span /> CUSTOMIZE</p>
-          <h2>ひと工夫で、<br />もっと自分好みに。</h2>
-          <p className="intro">その日の気分に合わせて、味わいを少し変えてみる。</p>
-          <ol className="custom-list">
-            <li><span>01</span><div><h3>さらに爽やかに</h3><p>シトラス果肉を追加して、果実感をプラス。</p></div></li>
-            <li><span>02</span><div><h3>コクをもうひとつ</h3><p>ホワイトモカフレーバーシロップを追加。</p></div></li>
-            <li><span>03</span><div><h3>すっきり楽しむ</h3><p>ノンホイップで、軽やかな仕上がりに。</p></div></li>
-          </ol>
-          <small>※ カスタマイズの可否・追加料金は、注文時に店舗でご確認ください。</small>
-        </div>
-      </section>
-
-      <section className="pairing-section">
-        <div className="pairing-copy">
-          <span className="pair-tag"># SWEET PAIRING</span>
-          <p className="eyebrow"><span /> FOOD &amp; BEVERAGE</p>
-          <h2>甘いお供と、<br />もうひとつ楽しい時間。</h2>
-          <p>ドリンクとフードの組み合わせも、その日の気分で。果実の一杯に、甘いひと皿を添えてみるのも楽しみ方のひとつです。</p>
-          <ExternalButton href={links.menu} secondary>フードメニューを見る</ExternalButton>
-        </div>
-        <div className="pairing-art">
-          <Image src="/images/generated/food-pairing.png" alt="オレンジティーとマンゴー色のケーキを合わせるイメージ" fill sizes="(max-width: 767px) 100vw, 58vw" />
-          <span className="pairing-label">GOOD<br />TOGETHER</span>
-          <p>DRINK <b>＋</b> SWEETS</p>
-        </div>
-      </section>
-
-      <section className="story-section" id="story">
-        <div className="story-inner">
-          <p className="eyebrow light"><span /> 30 YEARS IN JAPAN</p>
-          <div className="story-title">
-            <h2>一杯から、<br />つながる時間へ。</h2>
-            <span className="thirty">30<small>YEARS</small></span>
+            ))}
           </div>
-          <div className="story-photo">
-            <Image src="/images/generated/brand-connection.png" alt="コーヒーを囲んで過ごした時間を感じさせるテーブルのイメージ" fill sizes="100vw" />
-            <span>ONE CUP, MANY MOMENTS.</span>
-          </div>
-          <div className="story-bottom">
-            <p>1996年、東京・銀座に日本第1号店をオープン。2026年に日本上陸30周年を迎えました。変わらないのは、一杯を通じた人とのつながりです。</p>
-            <ExternalButton href={links.anniversary} secondary>30周年ストーリーを見る</ExternalButton>
-          </div>
-        </div>
-      </section>
+        </section>
 
-      <section className="section instagram-section">
-        <div className="section-head split-head">
-          <div>
-            <p className="eyebrow orange"><span /> @STARBUCKS_J</p>
-            <h2>Instagramで、<br />次の一杯を。</h2>
+        <section className="store-section" id="store-search" aria-labelledby="store-title">
+          <div className="store-map">
+            <Image src="/images/generated/store-search.png" alt="地図とスマートフォンから近くの店舗を探す演出イメージ" fill loading="lazy" sizes="(max-width: 767px) 100vw, 52vw" />
+            <b aria-hidden="true">FIND<br />YOUR<br />STORE</b>
           </div>
-          <div className="insta-intro"><p>季節の新商品や楽しみ方をチェック。</p><ExternalButton href={links.instagram} secondary>Instagramを見る</ExternalButton></div>
-        </div>
-        <div className="instagram-grid">
-          {gallery.map((item, i) => (
-            <a href={links.instagram} target="_blank" rel="noreferrer" key={`${item.src}-${i}`} aria-label="スターバックス ジャパン公式Instagramを見る">
-              <Image src={item.src} alt={item.alt} fill sizes="(max-width: 767px) 50vw, 25vw" />
-              <span><b>0{i + 1}</b><Arrow /></span>
-            </a>
-          ))}
-        </div>
-      </section>
-
-      <section className="store-section">
-        <div className="store-map">
-          <Image src="/images/generated/store-search.png" alt="地図とスマートフォンから近くの店舗を探すイメージ" fill sizes="(max-width: 767px) 100vw, 52vw" />
-          <b>FIND<br />YOUR<br />STORE</b>
-        </div>
-        <div className="store-copy">
-          <p className="eyebrow"><span /> STORE SEARCH</p>
-          <h2>近くの<br />スターバックスへ。</h2>
-          <p>今いる場所や行きたいエリアから、店舗を探せます。</p>
-          <div className="button-row">
-            <ExternalButton href={links.store}>近くの店舗を探す</ExternalButton>
-            <ExternalButton href={links.mobile} secondary>モバイルオーダーを見る</ExternalButton>
+          <div className="store-copy">
+            <p className="eyebrow"><span /> FIND A STORE</p>
+            <h2 id="store-title">近くの<br />スターバックスへ。</h2>
+            <p>今いる場所や行きたいエリアから、店舗を探せます。</p>
+            <div className="button-row">
+              <ExternalButton href={LINKS.storeSearch}>近くの店舗を探す</ExternalButton>
+              <ExternalButton href={LINKS.mobileOrder} secondary>モバイルオーダーを見る</ExternalButton>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section className="final-cta">
-        <p className="eyebrow light"><span /> READY WHEN YOU ARE</p>
-        <h2>今日の一杯を、<br />近くのお店で。</h2>
-        <p>気になる一杯が見つかったら、次はお店を探すだけ。</p>
-        <ExternalButton href={links.store}>近くの店舗を探す</ExternalButton>
-        <span className="final-doodle">SEE YOU<br />SOON!</span>
-      </section>
+        <section className="final-cta" aria-labelledby="final-title">
+          <p className="eyebrow light"><span /> READY WHEN YOU ARE</p>
+          <h2 id="final-title">今日の一杯を、<br />近くのお店で。</h2>
+          <p>気になる一杯が見つかったら、次はお店を探すだけ。</p>
+          <ExternalButton href={LINKS.storeSearch}>近くの店舗を探す</ExternalButton>
+          <span className="final-doodle" aria-hidden="true">SEE YOU<br />SOON!</span>
+        </section>
+      </main>
 
       <footer>
         <div className="footer-main">
           <a className="brand footer-brand" href="#top" aria-label="ページの先頭へ">
-            <span className="brand-mark">S</span>
-            <span className="brand-type"><b>STARBUCKS</b><small>COFFEE · JAPAN</small></span>
+            <BrandLabel footer />
           </a>
           <div className="footer-links">
-            <a href="https://www.starbucks.co.jp/" target="_blank" rel="noreferrer">公式サイト <Arrow /></a>
-            <a href={links.menu} target="_blank" rel="noreferrer">メニュー <Arrow /></a>
-            <a href={links.store} target="_blank" rel="noreferrer">店舗検索 <Arrow /></a>
-            <a href={links.instagram} target="_blank" rel="noreferrer">Instagram <Arrow /></a>
+            <a href={LINKS.website} target="_blank" rel="noopener noreferrer">公式サイト <Arrow /></a>
+            <a href={LINKS.menu} target="_blank" rel="noopener noreferrer">メニュー <Arrow /></a>
+            <a href={LINKS.storeSearch} target="_blank" rel="noopener noreferrer">店舗検索 <Arrow /></a>
+            <a href={LINKS.instagram} target="_blank" rel="noopener noreferrer">Instagram <Arrow /></a>
           </div>
         </div>
         <div className="footer-note">
-          <p>本ページは営業提案用サンプルです。掲載情報は制作時点の公開情報・提供資料に基づきます。</p>
+          <p>本ページは営業提案用サンプルです。<br />掲載情報は制作時点の公開情報・提供資料に基づきます。</p>
           <span>DESIGN SAMPLE / 2026</span>
         </div>
       </footer>
-    </main>
+    </>
   );
 }
