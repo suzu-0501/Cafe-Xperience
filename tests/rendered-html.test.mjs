@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { readFile } from "node:fs/promises";
+import { access, readFile } from "node:fs/promises";
 import test from "node:test";
 
 async function render() {
@@ -37,7 +37,7 @@ test("includes the confirmed seasonal products and conversion path", async () =>
   assert.ok((html.match(/https:\/\/store\.starbucks\.co\.jp\//g) ?? []).length >= 4);
   assert.match(html, /https:\/\/menu\.starbucks\.co\.jp\//);
   assert.match(html, /https:\/\/www\.instagram\.com\/starbucks_j\//);
-  assert.doesNotMatch(html, /人気No\.1|売切必至|ユーザーレビュー|LocalBusiness/);
+  assert.doesNotMatch(html, /人気No\.1|売切必至|口コミ|ユーザーレビュー|ジョイフル カプセル|LocalBusiness|¥|￥/);
 });
 
 test("keeps links and product content in data modules", async () => {
@@ -56,4 +56,22 @@ test("keeps links and product content in data modules", async () => {
   assert.match(seasonal, /export const seasonalProducts/);
   assert.match(classics, /export const classicProducts/);
   assert.match(gitignore, /Codex starbucks\.jp\.lp\.png/);
+});
+
+test("publishes only confirmed imagery with accessible motion and focus styles", async () => {
+  const [page, moodItems, layout, styles] = await Promise.all([
+    readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../app/data/mood-items.ts", import.meta.url), "utf8"),
+    readFile(new URL("../app/layout.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../app/globals.css", import.meta.url), "utf8"),
+  ]);
+
+  assert.doesNotMatch(page, /images\/generated|演出イメージ/);
+  assert.doesNotMatch(moodItems, /\bimage\b|\balt\b|images\/generated/);
+  assert.doesNotMatch(layout, /og\.png/);
+  assert.match(layout, /images\/orange-mango-hero\.jpg/);
+  assert.match(styles, /:focus-visible/);
+  assert.match(styles, /prefers-reduced-motion:\s*reduce/);
+  await assert.rejects(access(new URL("../public/images/generated", import.meta.url)));
+  await assert.rejects(access(new URL("../public/og.png", import.meta.url)));
 });

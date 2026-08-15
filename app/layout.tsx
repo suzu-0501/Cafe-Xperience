@@ -20,9 +20,9 @@ export async function generateMetadata(): Promise<Metadata> {
       type: "website",
       url: origin,
       locale: "ja_JP",
-      images: [{ url: `${origin}/og.png`, width: 1731, height: 909, alt: "今日は、どんな一杯にする？" }],
+      images: [{ url: `${origin}/images/orange-mango-hero.jpg`, width: 1280, height: 960, alt: "オレンジ＆マンゴーの3種のビバレッジ" }],
     },
-    twitter: { card: "summary_large_image", title, description, images: [`${origin}/og.png`] },
+    twitter: { card: "summary_large_image", title, description, images: [`${origin}/images/orange-mango-hero.jpg`] },
   };
 }
 

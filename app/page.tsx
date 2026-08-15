@@ -126,9 +126,8 @@ export default function Home() {
           </div>
           <div className="mood-grid">
             {moodItems.map((item) => (
-              <article className="mood-card" key={item.id}>
-                <Image src={item.image} alt={item.alt} fill loading="lazy" sizes="(max-width: 767px) 50vw, 25vw" />
-                <span className="mood-shade" aria-hidden="true" />
+              <article className={`mood-card ${item.tone}`} key={item.id}>
+                <span className="mood-orbit" aria-hidden="true" />
                 <div className="mood-top"><span>{item.time}</span><b aria-hidden="true">{item.icon}</b></div>
                 <div>
                   <h3>{item.title}</h3>
@@ -137,7 +136,6 @@ export default function Home() {
               </article>
             ))}
           </div>
-          <p className="visual-note">※ 掲載写真は時間の過ごし方を表現した演出イメージです。</p>
         </section>
 
         <section className="section classic-section" id="classic" aria-labelledby="classic-title">
@@ -172,7 +170,7 @@ export default function Home() {
 
         <section className="customize-section" id="customize" aria-labelledby="customize-title">
           <div className="customize-image">
-            <Image src="/images/generated/customize-citrus.png" alt="シトラス果肉やミルク、ソースを選ぶカスタマイズの演出イメージ" fill loading="lazy" sizes="(max-width: 767px) 100vw, 52vw" />
+            <Image src="/images/orange-frappuccino.jpg" alt="ぎゅぎゅっと オレンジ＆マンゴー フラペチーノの商品写真" fill loading="lazy" sizes="(max-width: 767px) 100vw, 52vw" />
             <span className="scribble" aria-hidden="true">MY CUP,<br />MY WAY.</span>
           </div>
           <div className="customize-copy">
@@ -184,22 +182,22 @@ export default function Home() {
               <li><span>02</span><div><h3>果実とチョコの組み合わせ</h3><p>シトラス果肉＋チョコレートソース</p></div></li>
               <li><span>03</span><div><h3>まろやかな味わいへ</h3><p>ホワイトモカフレーバーシロップ</p></div></li>
             </ol>
-            <small>※ 掲載写真は演出イメージです。カスタマイズの可否・追加料金は、注文時に店舗でご確認ください。</small>
+            <small>※ カスタマイズの可否・追加料金は、注文時に店舗でご確認ください。</small>
           </div>
         </section>
 
         <section className="pairing-section" id="pairing" aria-labelledby="pairing-title">
-          <div className="pairing-art">
-            <Image src="/images/generated/food-pairing.png" alt="オレンジティーとマンゴー色のスイーツを合わせる演出イメージ" fill loading="lazy" sizes="(max-width: 767px) 100vw, 60vw" />
-            <span className="pairing-label" aria-hidden="true">GOOD<br />TOGETHER</span>
-            <p aria-hidden="true">DRINK <b>＋</b> SWEETS</p>
+          <div className="pairing-placeholder" role="img" aria-label="フードペアリング投稿画像の差し替え枠">
+            <span aria-hidden="true">PAIRING PHOTO</span>
+            <p>提供画像<br />差し替え予定</p>
+            <small>ORIGINAL ASSET PENDING</small>
           </div>
           <div className="pairing-copy">
             <span className="pair-tag"># SWEET PAIRING</span>
             <p className="eyebrow"><span /> PAIRING</p>
             <h2 id="pairing-title">甘いお供と、<br />もうひとつ楽しい時間。</h2>
             <p>ドリンクとフードの組み合わせも、その日の気分で。</p>
-            <small>※ 掲載写真は演出イメージです。正式商品名・価格・販売期間は掲載していません。</small>
+            <small>※ 正式商品名・価格・販売期間は掲載していません。</small>
           </div>
         </section>
 
@@ -210,9 +208,11 @@ export default function Home() {
               <h2 id="story-title">一杯から、<br />つながる時間へ。</h2>
               <span className="thirty" aria-hidden="true">30<small>YEARS</small></span>
             </div>
-            <div className="story-photo">
-              <Image src="/images/generated/brand-connection.png" alt="コーヒーを囲んで過ごす時間の演出イメージ" fill loading="lazy" sizes="100vw" />
-              <span>ONE CUP, MANY MOMENTS.</span>
+            <div className="story-panel" aria-hidden="true">
+              <span>1996</span>
+              <i />
+              <span>2026</span>
+              <strong>ONE CUP,<br />MANY MOMENTS.</strong>
             </div>
             <div className="story-bottom">
               <p>1996年、東京・銀座から始まった日本のスターバックス。2026年で30周年。一杯を通じて、人やコミュニティとのつながりを大切にしてきました。</p>
@@ -243,9 +243,10 @@ export default function Home() {
         </section>
 
         <section className="store-section" id="store-search" aria-labelledby="store-title">
-          <div className="store-map">
-            <Image src="/images/generated/store-search.png" alt="地図とスマートフォンから近くの店舗を探す演出イメージ" fill loading="lazy" sizes="(max-width: 767px) 100vw, 52vw" />
+          <div className="store-visual" aria-hidden="true">
+            <span className="store-pin" />
             <b aria-hidden="true">FIND<br />YOUR<br />STORE</b>
+            <small>OFFICIAL STORE SEARCH</small>
           </div>
           <div className="store-copy">
             <p className="eyebrow"><span /> FIND A STORE</p>
