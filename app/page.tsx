@@ -38,10 +38,10 @@ const seasonal = [
 ];
 
 const moods = [
-  { time: "07:30", title: "朝の一杯", text: "ゆっくり今日を始めたいときに", tone: "cream", icon: "☀" },
-  { time: "12:15", title: "移動の途中", text: "気分を軽やかに変えたいときに", tone: "orange", icon: "↗" },
-  { time: "15:00", title: "ひと休み", text: "甘い時間を楽しみたいときに", tone: "pink", icon: "✦" },
-  { time: "19:10", title: "一日の終わり", text: "ほっと自分に戻りたいときに", tone: "green", icon: "☾" },
+  { time: "07:30", title: "朝の一杯", text: "ゆっくり今日を始めたいときに", tone: "cream", icon: "☀", image: "/images/generated/mood-morning.png", alt: "朝の窓辺に置かれたラテのイメージ" },
+  { time: "12:15", title: "移動の途中", text: "気分を軽やかに変えたいときに", tone: "orange", icon: "↗", image: "/images/generated/mood-commute.png", alt: "移動途中のベンチに置かれたテイクアウトカップのイメージ" },
+  { time: "15:00", title: "ひと休み", text: "甘い時間を楽しみたいときに", tone: "pink", icon: "✦", image: "/images/generated/mood-break.png", alt: "果実のドリンクと焼き菓子でひと休みするイメージ" },
+  { time: "19:10", title: "一日の終わり", text: "ほっと自分に戻りたいときに", tone: "green", icon: "☾", image: "/images/generated/mood-evening.png", alt: "夜の窓辺でコーヒーを楽しむイメージ" },
 ];
 
 const classics = [
@@ -178,6 +178,8 @@ export default function Home() {
         <div className="mood-grid">
           {moods.map((mood) => (
             <article className={`mood-card ${mood.tone}`} key={mood.title}>
+              <Image src={mood.image} alt={mood.alt} fill sizes="(max-width: 767px) 50vw, 25vw" />
+              <span className="mood-shade" aria-hidden="true" />
               <div className="mood-top"><span>{mood.time}</span><b>{mood.icon}</b></div>
               <div>
                 <h3>{mood.title}</h3>
@@ -220,7 +222,7 @@ export default function Home() {
 
       <section className="customize-section">
         <div className="customize-image">
-          <Image src="/images/orange-frappuccino.jpg" alt="オレンジ＆マンゴー フラペチーノのカスタマイズイメージ" fill sizes="(max-width: 767px) 100vw, 52vw" />
+          <Image src="/images/generated/customize-citrus.png" alt="シトラス果肉やミルク、ソースを選ぶカスタマイズのイメージ" fill sizes="(max-width: 767px) 100vw, 52vw" />
           <span className="scribble">MY CUP,<br />MY WAY.</span>
         </div>
         <div className="customize-copy">
@@ -244,10 +246,9 @@ export default function Home() {
           <p>ドリンクとフードの組み合わせも、その日の気分で。果実の一杯に、甘いひと皿を添えてみるのも楽しみ方のひとつです。</p>
           <ExternalButton href={links.menu} secondary>フードメニューを見る</ExternalButton>
         </div>
-        <div className="pairing-art" aria-label="ドリンクとスイーツを合わせる楽しみ方のイメージ">
-          <div className="orange-slice">GOOD<br />TOGETHER</div>
-          <div className="drink-shape"><span>S</span></div>
-          <div className="cake-shape"><i /></div>
+        <div className="pairing-art">
+          <Image src="/images/generated/food-pairing.png" alt="オレンジティーとマンゴー色のケーキを合わせるイメージ" fill sizes="(max-width: 767px) 100vw, 58vw" />
+          <span className="pairing-label">GOOD<br />TOGETHER</span>
           <p>DRINK <b>＋</b> SWEETS</p>
         </div>
       </section>
@@ -258,6 +259,10 @@ export default function Home() {
           <div className="story-title">
             <h2>一杯から、<br />つながる時間へ。</h2>
             <span className="thirty">30<small>YEARS</small></span>
+          </div>
+          <div className="story-photo">
+            <Image src="/images/generated/brand-connection.png" alt="コーヒーを囲んで過ごした時間を感じさせるテーブルのイメージ" fill sizes="100vw" />
+            <span>ONE CUP, MANY MOMENTS.</span>
           </div>
           <div className="story-bottom">
             <p>1996年、東京・銀座に日本第1号店をオープン。2026年に日本上陸30周年を迎えました。変わらないのは、一杯を通じた人とのつながりです。</p>
@@ -285,9 +290,8 @@ export default function Home() {
       </section>
 
       <section className="store-section">
-        <div className="store-map" aria-hidden="true">
-          <span className="map-road road-one" /><span className="map-road road-two" /><span className="map-road road-three" />
-          <span className="map-dot dot-one">S</span><span className="map-dot dot-two">S</span><span className="map-dot dot-three">S</span>
+        <div className="store-map">
+          <Image src="/images/generated/store-search.png" alt="地図とスマートフォンから近くの店舗を探すイメージ" fill sizes="(max-width: 767px) 100vw, 52vw" />
           <b>FIND<br />YOUR<br />STORE</b>
         </div>
         <div className="store-copy">
