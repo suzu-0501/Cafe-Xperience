@@ -18,6 +18,9 @@
   --side-padding-sp: 20px;
   --color-deep-green: #143b2f;
   --color-orange-dark: #c65f13;
+  --color-cream-light: #fcfaf6;
+  --color-ink-soft: rgba(30, 30, 30, .08);
+  --color-green-soft: rgba(0, 117, 74, .12);
 }
 
 * { box-sizing: border-box; }
@@ -296,6 +299,96 @@ footer { padding: 64px max(var(--side-padding-pc), calc((100vw - var(--content-m
 .footer-note p { margin: 0; }
 .footer-note span { letter-spacing: .14em; white-space: nowrap; }
 
+/* Editorial background system */
+.seasonal-section,
+.instagram-section { position: relative; isolation: isolate; }
+.seasonal-section::before,
+.instagram-section::before { content: ""; position: absolute; z-index: -2; inset: 0 calc(50% - 50vw); pointer-events: none; }
+.seasonal-section::after,
+.instagram-section::after { position: absolute; z-index: -1; pointer-events: none; color: transparent; font: 800 clamp(88px, 12vw, 172px)/.8 Montserrat, Arial, sans-serif; letter-spacing: -.065em; -webkit-text-stroke: 1px rgba(198, 95, 19, .12); }
+.seasonal-section::before {
+  background:
+    linear-gradient(90deg, transparent 0 11%, rgba(198, 95, 19, .07) 11% calc(11% + 1px), transparent calc(11% + 1px) 89%, rgba(198, 95, 19, .07) 89% calc(89% + 1px), transparent calc(89% + 1px)),
+    radial-gradient(circle at 88% 12%, rgba(245, 158, 11, .17), transparent 27%),
+    radial-gradient(circle at 2% 90%, rgba(212, 233, 226, .7), transparent 30%),
+    var(--color-cream-light);
+}
+.seasonal-section::after { content: "SEASONAL"; top: 38px; right: -36px; }
+.seasonal-image { border: 1px solid rgba(198, 95, 19, .12); box-shadow: 0 20px 52px rgba(93, 54, 17, .09); }
+.seasonal-copy { position: relative; }
+.seasonal-copy::before { content: ""; position: absolute; top: 0; left: 5px; width: 42px; height: 2px; background: var(--color-seasonal); }
+
+.mood-section { position: relative; isolation: isolate; overflow: hidden; background:
+  radial-gradient(circle at 12% 14%, rgba(255, 255, 255, .8), transparent 25%),
+  radial-gradient(circle at 88% 78%, rgba(0, 117, 74, .13), transparent 28%),
+  var(--color-secondary); }
+.mood-section::before { content: ""; position: absolute; z-index: -1; width: 560px; height: 560px; left: -300px; bottom: -310px; border: 1px solid rgba(0, 117, 74, .16); border-radius: 50%; box-shadow: 0 0 0 72px rgba(255, 255, 255, .11), 0 0 0 144px rgba(0, 117, 74, .045); }
+.mood-section::after { content: ""; position: absolute; z-index: -1; width: 210px; height: 210px; right: 4%; top: 40px; border: 1px solid rgba(0, 117, 74, .15); border-radius: 50%; }
+.mood-card { border: 1px solid rgba(30, 30, 30, .07); box-shadow: 0 18px 44px rgba(32, 70, 56, .08); }
+
+.classic-section { position: relative; isolation: isolate; overflow: hidden; background:
+  repeating-linear-gradient(90deg, transparent 0 calc(25% - 1px), rgba(255, 255, 255, .035) calc(25% - 1px) 25%),
+  radial-gradient(circle at 86% 7%, rgba(212, 233, 226, .13), transparent 24%),
+  var(--color-deep-green); }
+.classic-section::before { content: "CLASSICS"; position: absolute; z-index: -1; right: -20px; top: 52px; color: transparent; font: 800 clamp(90px, 13vw, 190px)/.8 Montserrat, Arial, sans-serif; letter-spacing: -.07em; -webkit-text-stroke: 1px rgba(212, 233, 226, .1); }
+.classic-section::after { content: ""; position: absolute; z-index: -1; width: 420px; height: 420px; left: -240px; bottom: -220px; border: 1px solid rgba(212, 233, 226, .12); border-radius: 50%; box-shadow: 0 0 0 66px rgba(212, 233, 226, .025); }
+.classic-card { border: 1px solid rgba(255, 255, 255, .18); box-shadow: 0 22px 48px rgba(0, 0, 0, .13); }
+
+.customize-section { position: relative; isolation: isolate; }
+.customize-copy { position: relative; overflow: hidden; background:
+  radial-gradient(circle at 104% 0, rgba(245, 158, 11, .16), transparent 32%),
+  linear-gradient(135deg, rgba(255, 255, 255, .38), transparent 46%); }
+.customize-copy::before { content: ""; position: absolute; z-index: -1; width: 360px; height: 360px; right: -230px; bottom: -210px; border: 1px solid rgba(198, 95, 19, .17); border-radius: 50%; box-shadow: 0 0 0 58px rgba(198, 95, 19, .035); }
+.custom-list li { position: relative; }
+.custom-list li::after { content: ""; position: absolute; left: 0; bottom: -1px; width: 0; height: 1px; background: var(--color-orange-dark); opacity: .55; transition: width .35s ease; }
+.custom-list li:hover::after { width: 100%; }
+
+.pairing-section { position: relative; isolation: isolate; overflow: hidden; background:
+  radial-gradient(circle at 88% 12%, rgba(255, 255, 255, .5), transparent 27%),
+  linear-gradient(120deg, rgba(255, 255, 255, .14), transparent 45%),
+  #ead0c8; }
+.pairing-section::before { content: ""; position: absolute; z-index: -1; inset: 0; background: repeating-linear-gradient(135deg, transparent 0 64px, rgba(119, 71, 59, .045) 64px 65px); pointer-events: none; }
+.pairing-placeholder { border-style: solid; border-color: rgba(123, 72, 59, .24); background:
+  radial-gradient(circle at 24% 25%, rgba(255, 255, 255, .82), transparent 28%),
+  linear-gradient(145deg, #fbf4f0, #f0dcd5); box-shadow: inset 0 0 0 12px rgba(255, 255, 255, .24), 0 24px 60px rgba(91, 55, 46, .1); }
+
+.story-section { position: relative; isolation: isolate; overflow: hidden; background:
+  radial-gradient(circle at 88% 16%, rgba(255, 255, 255, .72), transparent 26%),
+  linear-gradient(135deg, rgba(255, 255, 255, .18), transparent 42%),
+  var(--color-secondary); }
+.story-section::before { content: "30"; position: absolute; z-index: -1; left: -34px; bottom: -78px; color: transparent; font: 700 clamp(240px, 34vw, 520px)/.72 Georgia, serif; letter-spacing: -.12em; -webkit-text-stroke: 1px rgba(0, 117, 74, .09); }
+.story-panel { box-shadow: 0 26px 60px rgba(0, 76, 49, .08); backdrop-filter: blur(10px); }
+
+.instagram-section::before { background:
+  linear-gradient(90deg, transparent 0 8%, rgba(30, 30, 30, .055) 8% calc(8% + 1px), transparent calc(8% + 1px) 92%, rgba(30, 30, 30, .055) 92% calc(92% + 1px), transparent calc(92% + 1px)),
+  radial-gradient(circle at 8% 16%, rgba(212, 233, 226, .72), transparent 25%),
+  radial-gradient(circle at 94% 82%, rgba(245, 158, 11, .13), transparent 24%),
+  #fbfaf7; }
+.instagram-section::after { content: "INSTAGRAM"; left: -36px; bottom: 34px; -webkit-text-stroke-color: rgba(0, 117, 74, .09); }
+.instagram-grid a { border-radius: 2px 24px 2px 24px; box-shadow: 0 18px 42px rgba(58, 43, 24, .1); }
+
+.store-visual { background:
+  linear-gradient(rgba(0, 117, 74, .065) 1px, transparent 1px),
+  linear-gradient(90deg, rgba(0, 117, 74, .065) 1px, transparent 1px),
+  radial-gradient(circle at 80% 22%, rgba(255, 255, 255, .75), transparent 27%),
+  var(--color-secondary); background-size: 56px 56px, 56px 56px, auto, auto; }
+.store-copy { position: relative; overflow: hidden; background:
+  radial-gradient(circle at 108% 108%, rgba(0, 117, 74, .09), transparent 38%),
+  #f0eee8; }
+
+.final-cta { isolation: isolate; overflow: hidden; background:
+  radial-gradient(circle at 12% 14%, rgba(255, 223, 72, .28), transparent 26%),
+  radial-gradient(circle at 90% 90%, rgba(95, 29, 4, .22), transparent 30%),
+  var(--color-orange-dark); }
+.final-cta::before,
+.final-cta::after { content: ""; position: absolute; z-index: -1; border: 1px solid rgba(255, 255, 255, .2); border-radius: 50%; pointer-events: none; }
+.final-cta::before { width: 480px; height: 480px; left: -260px; top: -300px; box-shadow: 0 0 0 70px rgba(255, 255, 255, .035); }
+.final-cta::after { width: 300px; height: 300px; right: -130px; bottom: -190px; box-shadow: 0 0 0 52px rgba(255, 255, 255, .035); }
+
+footer { background:
+  linear-gradient(90deg, rgba(0, 117, 74, .035) 1px, transparent 1px),
+  var(--color-surface); background-size: 80px 100%, auto; }
+
 @media (max-width: 1080px) {
   .site-header { padding-inline: 28px; }
   .site-header nav { gap: 18px; }
@@ -404,6 +497,17 @@ footer { padding: 64px max(var(--side-padding-pc), calc((100vw - var(--content-m
   .final-cta .button { width: 100%; }
   .final-doodle { position: static; margin-top: 34px; display: block; }
   footer { padding: 54px var(--side-padding-sp) 24px; }
+  .seasonal-section::after { top: 28px; right: -10px; font-size: 72px; }
+  .mood-section::before { width: 360px; height: 360px; left: -250px; bottom: -180px; }
+  .mood-section::after { width: 140px; height: 140px; right: -56px; top: 88px; }
+  .classic-section::before { top: 30px; right: -8px; font-size: 72px; }
+  .classic-section::after { width: 280px; height: 280px; left: -190px; bottom: -140px; }
+  .story-section::before { left: -18px; bottom: -24px; font-size: 230px; }
+  .instagram-section::after { left: -12px; bottom: 56px; font-size: 68px; }
+  .instagram-grid a { border-radius: 2px 16px 2px 16px; }
+  .store-visual { background-size: 38px 38px, 38px 38px, auto, auto; }
+  .final-cta::before { width: 300px; height: 300px; left: -210px; top: -180px; }
+  .final-cta::after { width: 220px; height: 220px; right: -150px; bottom: -100px; }
   .footer-main { display: block; }
   .footer-links { margin-top: 34px; grid-template-columns: 1fr; gap: 0; }
   .footer-note { margin-top: 38px; display: block; }

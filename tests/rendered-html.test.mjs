@@ -82,6 +82,11 @@ test("publishes only confirmed imagery with accessible motion and focus styles",
   assert.match(styles, /animation:\s*hero-mobile-reveal\s+\.72s/);
   assert.doesNotMatch(styles, /mask-image/);
   assert.doesNotMatch(styles, /\.hero-mobile-loop-track\s*\{[^}]*width:\s*200%/);
+  assert.match(styles, /Editorial background system/);
+  assert.match(styles, /\.seasonal-section::before/);
+  assert.match(styles, /\.classic-section::before/);
+  assert.match(styles, /\.instagram-section::after/);
+  assert.match(styles, /\.final-cta::before/);
   assert.match(styles, /\.mood-grid\s*\{[^}]*grid-template-columns:\s*repeat\(2,\s*minmax\(0,\s*1fr\)\)[^}]*align-items:\s*stretch/);
   assert.match(styles, /\.mood-card\s*\{[^}]*aspect-ratio:\s*auto[^}]*min-height:\s*226px/);
   assert.match(styles, /\.mood-card:hover\s*\{\s*transform:\s*none/);
