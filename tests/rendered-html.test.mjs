@@ -102,12 +102,13 @@ test("publishes only confirmed imagery with accessible motion and focus styles",
 });
 
 test("builds a repository-aware static entry for GitHub Pages", async () => {
-  const [packageJson, pagesConfig, pagesHtml, pagesEntry, imageAdapter] = await Promise.all([
+  const [packageJson, pagesConfig, pagesHtml, pagesEntry, imageAdapter, workflow] = await Promise.all([
     readFile(new URL("../package.json", import.meta.url), "utf8"),
     readFile(new URL("../vite.pages.config.ts", import.meta.url), "utf8"),
     readFile(new URL("../github-pages/index.html", import.meta.url), "utf8"),
     readFile(new URL("../github-pages/src/main.tsx", import.meta.url), "utf8"),
     readFile(new URL("../github-pages/next-image.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../.github/workflows/deploy-pages.yml", import.meta.url), "utf8"),
   ]);
 
   assert.match(packageJson, /"build:pages":\s*"vite build --config vite\.pages\.config\.ts"/);
@@ -117,4 +118,8 @@ test("builds a repository-aware static entry for GitHub Pages", async () => {
   assert.match(pagesHtml, /営業用サンプル/);
   assert.match(pagesEntry, /<Home \/>/);
   assert.match(imageAdapter, /import\.meta\.env\.BASE_URL/);
+  assert.match(workflow, /branches:\s*\n\s*- main/);
+  assert.match(workflow, /run:\s*npm run build:pages/);
+  assert.match(workflow, /actions\/upload-pages-artifact@v3/);
+  assert.match(workflow, /actions\/deploy-pages@v4/);
 });
