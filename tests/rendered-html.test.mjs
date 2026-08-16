@@ -100,3 +100,21 @@ test("publishes only confirmed imagery with accessible motion and focus styles",
   await assert.rejects(access(new URL("../public/images/generated", import.meta.url)));
   await assert.rejects(access(new URL("../public/og.png", import.meta.url)));
 });
+
+test("builds a repository-aware static entry for GitHub Pages", async () => {
+  const [packageJson, pagesConfig, pagesHtml, pagesEntry, imageAdapter] = await Promise.all([
+    readFile(new URL("../package.json", import.meta.url), "utf8"),
+    readFile(new URL("../vite.pages.config.ts", import.meta.url), "utf8"),
+    readFile(new URL("../github-pages/index.html", import.meta.url), "utf8"),
+    readFile(new URL("../github-pages/src/main.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../github-pages/next-image.tsx", import.meta.url), "utf8"),
+  ]);
+
+  assert.match(packageJson, /"build:pages":\s*"vite build --config vite\.pages\.config\.ts"/);
+  assert.match(pagesConfig, /base:\s*"\/Cafe-Xperience\/"/);
+  assert.match(pagesConfig, /"next\/image"/);
+  assert.match(pagesHtml, /name="robots" content="noindex,nofollow"/);
+  assert.match(pagesHtml, /営業用サンプル/);
+  assert.match(pagesEntry, /<Home \/>/);
+  assert.match(imageAdapter, /import\.meta\.env\.BASE_URL/);
+});
