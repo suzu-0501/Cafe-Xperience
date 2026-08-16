@@ -59,11 +59,12 @@ test("keeps links and product content in data modules", async () => {
 });
 
 test("publishes only confirmed imagery with accessible motion and focus styles", async () => {
-  const [page, moodItems, layout, styles] = await Promise.all([
+  const [page, moodItems, layout, styles, reveal] = await Promise.all([
     readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/data/mood-items.ts", import.meta.url), "utf8"),
     readFile(new URL("../app/layout.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/globals.css", import.meta.url), "utf8"),
+    readFile(new URL("../app/reveal-on-scroll.tsx", import.meta.url), "utf8"),
   ]);
 
   assert.doesNotMatch(page, /images\/generated|演出イメージ/);
@@ -87,6 +88,12 @@ test("publishes only confirmed imagery with accessible motion and focus styles",
   assert.match(styles, /\.classic-section::before/);
   assert.match(styles, /\.instagram-section::after/);
   assert.match(styles, /\.final-cta::before/);
+  assert.match(page, /<RevealOnScroll \/>/);
+  assert.match(page, /data-reveal-list/);
+  assert.match(reveal, /IntersectionObserver/);
+  assert.match(reveal, /prefers-reduced-motion:\s*reduce/);
+  assert.match(styles, /\.reveal-ready \[data-reveal\]/);
+  assert.match(styles, /@media \(hover:\s*hover\) and \(pointer:\s*fine\)/);
   assert.match(styles, /\.mood-grid\s*\{[^}]*grid-template-columns:\s*repeat\(2,\s*minmax\(0,\s*1fr\)\)[^}]*align-items:\s*stretch/);
   assert.match(styles, /\.mood-card\s*\{[^}]*aspect-ratio:\s*auto[^}]*min-height:\s*226px/);
   assert.match(styles, /\.mood-card:hover\s*\{\s*transform:\s*none/);
