@@ -13,7 +13,7 @@ export default defineConfig({
     },
   },
   build: {
-    outDir: resolve(import.meta.dirname, "dist-pages"),
+    outDir: resolve(import.meta.dirname, "dist"),
     emptyOutDir: true,
   },
 });

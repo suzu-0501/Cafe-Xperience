@@ -120,6 +120,6 @@ test("builds a repository-aware static entry for GitHub Pages", async () => {
   assert.match(imageAdapter, /import\.meta\.env\.BASE_URL/);
   assert.match(workflow, /branches:\s*\n\s*- main/);
   assert.match(workflow, /run:\s*npm run build:pages/);
-  assert.match(workflow, /actions\/upload-pages-artifact@v3/);
+  assert.match(workflow, /actions\/upload-pages-artifact@v4/);
   assert.match(workflow, /actions\/deploy-pages@v4/);
 });
