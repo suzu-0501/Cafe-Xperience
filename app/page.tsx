@@ -76,7 +76,6 @@ export default function Home() {
             >
               <div className="hero-mobile-loop-track" aria-hidden="true">
                 <span className="hero-mobile-loop-frame" />
-                <span className="hero-mobile-loop-frame" />
               </div>
             </div>
             <span className="hero-sticker" aria-hidden="true">SUMMER<br />MOOD!</span>

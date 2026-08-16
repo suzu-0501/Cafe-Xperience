@@ -74,8 +74,11 @@ test("publishes only confirmed imagery with accessible motion and focus styles",
   assert.match(styles, /prefers-reduced-motion:\s*reduce/);
   assert.match(page, /className="hero-mobile-loop"/);
   assert.match(styles, /\.hero-mobile-loop\s*\{\s*display:\s*none/);
-  assert.match(styles, /animation:\s*hero-mobile-loop\s+16s\s+linear\s+infinite/);
-  assert.match(styles, /@keyframes\s+hero-mobile-loop/);
+  assert.equal((page.match(/className="hero-mobile-loop-frame"/g) ?? []).length, 1);
+  assert.match(styles, /animation:\s*hero-mobile-pan\s+16s\s+ease-in-out\s+infinite\s+alternate/);
+  assert.match(styles, /@keyframes\s+hero-mobile-pan/);
+  assert.doesNotMatch(styles, /mask-image|animation-delay/);
+  assert.doesNotMatch(styles, /\.hero-mobile-loop-track\s*\{[^}]*width:\s*200%/);
   assert.match(styles, /\.mood-grid\s*\{[^}]*grid-template-columns:\s*repeat\(2,\s*minmax\(0,\s*1fr\)\)[^}]*align-items:\s*stretch/);
   assert.match(styles, /\.mood-card\s*\{[^}]*aspect-ratio:\s*auto[^}]*min-height:\s*226px/);
   assert.match(styles, /\.mood-card:hover\s*\{\s*transform:\s*none/);
