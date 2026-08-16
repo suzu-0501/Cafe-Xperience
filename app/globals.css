@@ -354,11 +354,13 @@ footer { padding: 64px max(var(--side-padding-pc), calc((100vw - var(--content-m
   .classic-section { padding-left: var(--side-padding-sp); padding-right: var(--side-padding-sp); }
   .centered { margin-bottom: 34px; }
   .centered > p:last-child { font-size: 15px; line-height: 1.8; }
-  .mood-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; }
-  .mood-card { aspect-ratio: .76; padding: 14px; border-radius: var(--radius-md); }
+  .mood-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: stretch; gap: 9px; }
+  .mood-card { aspect-ratio: auto; min-height: 226px; padding: 14px; gap: 24px; border-radius: var(--radius-md); }
+  .mood-card:hover { transform: none; }
   .mood-top b { width: 34px; height: 34px; }
-  .mood-card h3 { font-size: 18px; }
-  .mood-card p { font-size: 15px; line-height: 1.55; }
+  .mood-card > div:last-child { min-width: 0; }
+  .mood-card h3 { font-size: 18px; line-height: 1.35; word-break: keep-all; }
+  .mood-card p { font-size: 15px; line-height: 1.65; overflow-wrap: anywhere; }
   .classic-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; }
   .classic-card { padding: 8px 8px 16px; }
   .classic-visual { height: 170px; padding: 12px; }
@@ -410,7 +412,7 @@ footer { padding: 64px max(var(--side-padding-pc), calc((100vw - var(--content-m
   .header-cta { padding-inline: 13px; }
   .hero-visual { min-height: 400px; }
   .hero h1 { font-size: 40px; }
-  .mood-card { min-height: 205px; padding: 12px; }
+  .mood-card { min-height: 240px; padding: 12px; }
   .mood-card h3 { font-size: 17px; }
   .mood-card p { font-size: 15px; }
   .classic-visual { height: 150px; }

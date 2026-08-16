@@ -76,6 +76,9 @@ test("publishes only confirmed imagery with accessible motion and focus styles",
   assert.match(styles, /\.hero-mobile-loop\s*\{\s*display:\s*none/);
   assert.match(styles, /animation:\s*hero-mobile-loop\s+16s\s+linear\s+infinite/);
   assert.match(styles, /@keyframes\s+hero-mobile-loop/);
+  assert.match(styles, /\.mood-grid\s*\{[^}]*grid-template-columns:\s*repeat\(2,\s*minmax\(0,\s*1fr\)\)[^}]*align-items:\s*stretch/);
+  assert.match(styles, /\.mood-card\s*\{[^}]*aspect-ratio:\s*auto[^}]*min-height:\s*226px/);
+  assert.match(styles, /\.mood-card:hover\s*\{\s*transform:\s*none/);
   await assert.rejects(access(new URL("../public/images/generated", import.meta.url)));
   await assert.rejects(access(new URL("../public/og.png", import.meta.url)));
 });
