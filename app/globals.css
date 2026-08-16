@@ -91,6 +91,7 @@ section[id] { scroll-margin-top: 76px; }
   overflow: hidden;
 }
 .hero-visual img { object-position: center; }
+.hero-mobile-loop { display: none; }
 .hero-visual::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(247, 234, 211, .18), transparent 18%); }
 .hero-sticker {
   position: absolute;
@@ -320,7 +321,10 @@ footer { padding: 64px max(var(--side-padding-pc), calc((100vw - var(--content-m
   .header-cta { min-height: 44px; padding: 0 16px; gap: 12px; font-size: 11px; }
   .hero { min-height: 0; display: flex; flex-direction: column; }
   .hero-visual { min-height: 430px; order: 0; }
-  .hero-visual img { object-position: 52% center; }
+  .hero-static-image { display: none; }
+  .hero-mobile-loop { position: absolute; inset: 0; display: block; overflow: hidden; }
+  .hero-mobile-loop-track { width: 200%; height: 100%; display: flex; animation: hero-mobile-loop 16s linear infinite; will-change: transform; }
+  .hero-mobile-loop-frame { flex: 0 0 50%; height: 100%; background: url("/images/orange-mango-hero.jpg") 52% center / cover no-repeat; }
   .hero-sticker { top: auto; right: 18px; bottom: 20px; width: 88px; height: 88px; font-size: 12px; }
   .hero-caption { left: 18px; bottom: 15px; font-size: 7px; }
   .hero-copy { padding: 54px var(--side-padding-sp) 64px; order: 1; }
@@ -393,6 +397,11 @@ footer { padding: 64px max(var(--side-padding-pc), calc((100vw - var(--content-m
   .footer-links { margin-top: 34px; grid-template-columns: 1fr; gap: 0; }
   .footer-note { margin-top: 38px; display: block; }
   .footer-note span { display: block; margin-top: 12px; }
+}
+
+@keyframes hero-mobile-loop {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-50%, 0, 0); }
 }
 
 @media (max-width: 350px) {

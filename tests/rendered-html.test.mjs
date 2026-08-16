@@ -72,6 +72,10 @@ test("publishes only confirmed imagery with accessible motion and focus styles",
   assert.match(layout, /images\/orange-mango-hero\.jpg/);
   assert.match(styles, /:focus-visible/);
   assert.match(styles, /prefers-reduced-motion:\s*reduce/);
+  assert.match(page, /className="hero-mobile-loop"/);
+  assert.match(styles, /\.hero-mobile-loop\s*\{\s*display:\s*none/);
+  assert.match(styles, /animation:\s*hero-mobile-loop\s+16s\s+linear\s+infinite/);
+  assert.match(styles, /@keyframes\s+hero-mobile-loop/);
   await assert.rejects(access(new URL("../public/images/generated", import.meta.url)));
   await assert.rejects(access(new URL("../public/og.png", import.meta.url)));
 });

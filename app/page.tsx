@@ -62,12 +62,23 @@ export default function Home() {
         <section className="hero" id="top" aria-labelledby="hero-title">
           <div className="hero-visual">
             <Image
+              className="hero-static-image"
               src="/images/orange-mango-hero.jpg"
               alt="オレンジ＆マンゴーの3種のビバレッジ"
               fill
               priority
               sizes="(max-width: 767px) 100vw, 57vw"
             />
+            <div
+              className="hero-mobile-loop"
+              role="img"
+              aria-label="オレンジ＆マンゴーの3種のビバレッジ"
+            >
+              <div className="hero-mobile-loop-track" aria-hidden="true">
+                <span className="hero-mobile-loop-frame" />
+                <span className="hero-mobile-loop-frame" />
+              </div>
+            </div>
             <span className="hero-sticker" aria-hidden="true">SUMMER<br />MOOD!</span>
             <span className="hero-caption">ORANGE &amp; MANGO / 2026</span>
           </div>
